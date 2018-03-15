@@ -1,0 +1,17 @@
+body {
+	background: url('../img/bedge_grunge.png') repeat center center #fafafa;
+	color: #505050;
+	font-family: 'CuprumFFURegular', Arial, Helvetica, sans-serif;
+	font-size: 18px;
+}
+
+@font-face {
+    font-family: 'CuprumFFURegular';
+    src: url('../fonts/Cuprum-webfont.eot');
+    src: url('../fonts/Cuprum-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Cuprum-webfont.woff') format('woff'),
+         url('../fonts/Cuprum-webfont.ttf') format('truetype'),
+         url('../fonts/Cuprum-webfont.svg#CuprumFFURegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
