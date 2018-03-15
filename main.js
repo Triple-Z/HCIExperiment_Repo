@@ -18,8 +18,9 @@ var lastHighlight;
 var canvas;
 var context;
 var el;
-const number = 1000;
+const number = 500;
 const judge_dis = 50;
+const swipeInterval = 30;
 
 
 // MAIN
@@ -147,7 +148,7 @@ function canvasSwipe(clickX, clickY) {
 
     //计算斜边长
     var dis = Math.sqrt(Math.pow(clickX, 2) + Math.pow(clickY, 2))
-    var n = parseInt(dis / 20)
+    var n = parseInt(dis / swipeInterval)
     if (n >= select.length) {
         n = select.length - 1
     }
