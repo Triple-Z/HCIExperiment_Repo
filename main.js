@@ -18,9 +18,9 @@ var lastHighlight;
 var canvas;
 var context;
 var el;
-const number = 500;
-const judge_dis = 50;
-const swipeInterval = 30;
+const number = 300;
+const judge_dis = 20;
+const swipeInterval = 20;
 
 
 // MAIN
