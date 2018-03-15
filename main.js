@@ -74,8 +74,8 @@ function drawCircles() {
 // -------------------------------------
 
 function MarkSelected() {
-    for (var i = 0; i < select.length; i++) {
-        var circle = select[i];
+    for (var i = 0; i < lastSelect.length; i++) {
+        var circle = lastSelect[i];
         context.globalAlpha = 0.85;  
         context.beginPath();  
         context.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);  
@@ -83,8 +83,8 @@ function MarkSelected() {
         context.fill();  
         context.stroke();
     }
-    for (var i = 0; i < lastSelect.length; i++) {
-        var circle = lastSelect[i];
+    for (var i = 0; i < select.length; i++) {
+        var circle = select[i];
         context.globalAlpha = 0.85;  
         context.beginPath();  
         context.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);  
@@ -118,13 +118,15 @@ function canvasClick(clickX, clickY) {
     console.log(select);
 
     // clear
-    for (var i = 0; i < select.length; i++) {
-        select[i].color = "#CAFF70";
-    }
+    // for (var i = 0; i < select.length; i++) {
+    //     select[i].color = "#CAFF70";
+    // }
 }
 
 
 function MarkHighlighted(list) {
+    console.info('LIST:');
+    console.log(list);
     // TODO
     for (var i = 0; i < list.length; i++) {
         var circle = list[i];
@@ -137,25 +139,37 @@ function MarkHighlighted(list) {
     }
 }    
 
-     
 function canvasSwipe(clickX, clickY) {
 
     //计算斜边长
     var dis = Math.sqrt(Math.pow(clickX, 2) + Math.pow(clickY, 2))
     var n = parseInt(dis / 20)
+    if (n >= select.length) {
+        n = select.length - 1
+    }
     console.log('n = ' + n)
 
     var highlight = select[n];
     console.log(highlight)
-        //将在选中区域的点点亮
+
+
+    if (lastHighlight == null) {
+        lastHighlight = highlight
+    }
+
+    //将在选中区域的点点亮
     highlight.color = "#0000ff";
     highlight.isSelected = true;
     // select.push(circle);
-    MarkHighlighted([highlight, lastHighlight]);
+    MarkHighlighted([lastHighlight, highlight]);
     // console.log([clickX, clickY]);
-    console.log('HIT: ' + highlight);
-
     highlight.color = "#ff0000"
+    highlight.isSelected = false;
+    // select.push(highlight)
+
+    lastHighlight = highlight
+    console.log('Last high light: ')
+    console.log(lastHighlight)
 }
 
 drawCircles();    
@@ -191,9 +205,6 @@ function swipedetect(el, callback) {
         startX = touchobj.pageX
         startY = touchobj.pageY
 
-
-        lastHighlight = highlight;
-        lastSelect = select;
         select = [];
         canvasClick(startX, startY)
 
@@ -208,6 +219,11 @@ function swipedetect(el, callback) {
         distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
         console.log('x: ' + distX + ' y: ' + distY)
         canvasSwipe(distX, distY)
+
+        // lastHighlight = highlight;
+        console.log('lastHightlight=');
+        console.log(lastHighlight);
+
         e.preventDefault() // prevent scrolling when inside DIV
     }, false)
 
@@ -225,6 +241,13 @@ function swipedetect(el, callback) {
             //     }
             // }
             // handleswipe(swipedir)
+
+
+        lastSelect = select;
+        for (var i = 0; i < lastSelect.length; i++) {
+            lastSelect[i].color = "#CAFF70";
+        }
+
         e.preventDefault()
     }, false)
 }
