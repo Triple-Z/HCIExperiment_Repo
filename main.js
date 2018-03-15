@@ -26,10 +26,10 @@ const swipeInterval = 30;
 // MAIN
 window.onload = function() {
 
-    $("#myCanvas").width = $(window).width
-    $("#myCanvas").height = $(window).height
+    $("#myCanvas").attr("width", $(window).width())
+    $("#myCanvas").attr("height", $(window).height())
 
-    canvas = document.getElementById("myCanvas");      
+    canvas = document.getElementById("myCanvas");
     // el = document.getElementById('swipezone');
     context = canvas.getContext("2d");
     // listener = document.addEventListener('click',updatehandler,false); 
@@ -38,6 +38,7 @@ window.onload = function() {
     for (var i = 0; i < number; i++) {
         addCircles();
     }
+
     drawCircles();    
     console.log(circles);
     swipedetect(canvas, function(swipedir) {
