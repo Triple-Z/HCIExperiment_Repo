@@ -20,7 +20,7 @@ var context;
 var el;
 const number = 300;
 const judge_dis = 20;
-const swipeInterval = 20;
+const swipeInterval = 30;
 
 
 // MAIN
