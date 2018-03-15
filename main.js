@@ -149,7 +149,7 @@ function canvasSwipe(clickX, clickY) {
 
     //计算斜边长
     var dis = Math.sqrt(Math.pow(clickX, 2) + Math.pow(clickY, 2))
-    var n = parseInt(dis / swipeInterval)
+    var n = parseInt((dis / swipeInterval) % select.length)
     if (n >= select.length) {
         n = select.length - 1
     }
