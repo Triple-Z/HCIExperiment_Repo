@@ -24,6 +24,10 @@ const judge_dis = 50;
 
 // MAIN
 window.onload = function() {
+
+    $("#myCanvas").width = $(window).width
+    $("#myCanvas").height = $(window).height
+
     canvas = document.getElementById("myCanvas");      
     // el = document.getElementById('swipezone');
     context = canvas.getContext("2d");
