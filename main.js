@@ -15,11 +15,14 @@ var select = [];
 var lastSelect = [];
 var highlight;
 var lastHighlight;
+var target;
+var lastTarget;
+
 var canvas;
 var context;
 var el;
 const number = 300;
-const judge_dis = 20;
+const judge_dis = 40;
 const swipeInterval = 30;
 
 
@@ -40,6 +43,7 @@ window.onload = function() {
     }
 
     drawCircles();    
+    TargetBall();
     console.log(circles);
     swipedetect(canvas, function(swipedir) {
         // swipedir contains either "none", "left", "right", "top", or "down"
@@ -79,6 +83,28 @@ function drawCircles() {
 
 // -------------------------------------
 
+function TargetBall() {
+    // Select a target ball
+    var randomNum;
+    randomNum = randomFromTo(0, number);
+    target = circles[randomNum];
+    target.color = "#0000ff";
+    target.isSelected = true;
+    MarkTargetBall();
+}
+
+function MarkTargetBall() {
+    var circle = target;
+    context.globalAlpha = 0.85;  
+    context.beginPath();  
+    context.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);  
+    context.fillStyle = circle.color;  
+    context.fill();  
+    context.stroke();
+}
+
+// -------------------------------------
+
 function MarkSelected() {
     for (var i = 0; i < lastSelect.length; i++) {
         var circle = lastSelect[i];
@@ -114,7 +140,7 @@ function canvasClick(clickX, clickY) {
         var dis = Math.sqrt(Math.pow(circle.x - clickX, 2) + Math.pow(circle.y - clickY, 2))
             //将在选中区域的点点亮，同时将上次选中的区域重新绘制
         if (dis < judge_dis) {
-            circle.color = "#ff0000";
+            circle.color = "#d8d8d8";
             circle.isSelected = true;
             select.push(circle);
             MarkSelected();
@@ -163,13 +189,22 @@ function canvasSwipe(clickX, clickY) {
         lastHighlight = highlight
     }
 
+    target.color = "#0000ff";
     //将在选中区域的点点亮
-    highlight.color = "#0000ff";
+    highlight.color = "#ff0000";
     highlight.isSelected = true;
+
+    if (target == highlight) {
+        highlight.color = "#ffff00";
+        console.log('HIT');
+        console.log(highlight.color);
+    }
     // select.push(circle);
-    MarkHighlighted([lastHighlight, highlight]);
+
+    // Recolor target ball
+    MarkHighlighted([target, lastHighlight, highlight]);
     // console.log([clickX, clickY]);
-    highlight.color = "#ff0000"
+    highlight.color = "#d8d8d8"
     highlight.isSelected = false;
     // select.push(highlight)
 
@@ -253,6 +288,8 @@ function swipedetect(el, callback) {
         for (var i = 0; i < lastSelect.length; i++) {
             lastSelect[i].color = "#CAFF70";
         }
+        lastTarget = target;
+        lastTarget.color = "#CAFF70";
 
         e.preventDefault()
     }, false)
